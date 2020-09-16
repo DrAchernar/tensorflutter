@@ -1,6 +1,8 @@
 # tensorfirat
 
-A new Flutter project.
+Developed for second summet internship. 
+
+This project is an example about usage tensorflow with flutter.  It has a single screen for choosing object to detect. 
 
 ## Getting Started
 
