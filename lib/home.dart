@@ -121,59 +121,67 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
       ),
       body: _model == ""
-          ? new StaggeredGridView.countBuilder(
-        crossAxisCount: 4,
-        itemCount: 8,
-        itemBuilder: (BuildContext context, int index) => new Container(
-            child: new GestureDetector(
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(images[index]),
-                    fit: BoxFit.cover,
-                  ),
-              ),
-                child: Center(
-                  child: Text(
-                    '${names[index]}',
-                    style: TextStyle(
-                      backgroundColor: Colors.black54,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ),
-            ),
-              onTap: () {
-                target = names[index];
-                loadModel();
-              },
-              ),
-            ),
-        staggeredTileBuilder: (int index) =>
-        new StaggeredTile.count(2, index.isEven ? 2 : 1),
-        mainAxisSpacing: 4.0,
-        crossAxisSpacing: 4.0,
-      )
-          : Stack(
-              children: [
-                Camera(
-                  widget.cameras,
-                  _model,
-                  setRecognitions,
-                ),
-                Detector(
-                  _recognitions == null ? [] : _recognitions,
-                  math.max(_imageHeight, _imageWidth),
-                  math.min(_imageHeight, _imageWidth),
-                  screen.height,
-                  screen.width,
-                  _model,
-                  target,
-                ),
-              ],
-            ),
+          ? modelScreen()
+          : scanScreen(screen),
     );
+  }
+
+  StaggeredGridView modelScreen() {
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 4,
+      itemCount: 8,
+      itemBuilder: (BuildContext context, int index) => new Container(
+          child: new GestureDetector(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(images[index]),
+                  fit: BoxFit.cover,
+                ),
+            ),
+              child: Center(
+                child: Text(
+                  '${names[index]}',
+                  style: TextStyle(
+                    backgroundColor: Colors.black54,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+          ),
+            onTap: () {
+              target = names[index];
+              loadModel();
+            },
+            ),
+          ),
+      staggeredTileBuilder: (int index) =>
+      new StaggeredTile.count(2, index.isEven ? 2 : 1),
+      mainAxisSpacing: 4.0,
+      crossAxisSpacing: 4.0,
+    );
+  }
+
+  Stack scanScreen(Size screen) {
+    return Stack(
+            children: [
+              Camera(
+                widget.cameras,
+                _model,
+                setRecognitions,
+              ),
+              Detector(
+                _recognitions == null ? [] : _recognitions,
+                math.max(_imageHeight, _imageWidth),
+                math.min(_imageHeight, _imageWidth),
+                screen.height,
+                screen.width,
+                _model,
+                target,
+              ),
+            ],
+          );
   }
 }

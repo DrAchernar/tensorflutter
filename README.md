@@ -1,4 +1,4 @@
-# tensorfirat
+# tensorflutter
 
 Developed for second summet internship. 
 
